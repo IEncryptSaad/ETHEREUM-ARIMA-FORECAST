@@ -13,16 +13,19 @@ def adf_test(series: pd.Series):
     return output, result[1] <= 0.05  # stationary if p <= 0.05
 
 # Plot ACF and PACF
-def plot_acf_pacf(series: pd.Series, lags=40):
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+import matplotlib.pyplot as plt
+
+def plot_acf_pacf(series, lags=40):
+    s = series.dropna()
+    if len(s) > 800:  # keep plots light
+        s = s.tail(800)
     fig, ax = plt.subplots(1, 2, figsize=(10, 4))
-    pd.plotting.autocorrelation_plot(series, ax=ax[0])
-    ax[0].set_title("Autocorrelation (ACF)")
-    pacf_vals = pacf(series.dropna(), nlags=lags)
-    ax[1].stem(range(len(pacf_vals)), pacf_vals, use_line_collection=True)
-    ax[1].set_title("Partial Autocorrelation (PACF)")
+    plot_acf(s, lags=lags, ax=ax[0])
+    plot_pacf(s, lags=lags, ax=ax[1], method="ywm")
     plt.tight_layout()
     return fig
-
+    
 # Streamlit section
 def run_stationarity_app(df: pd.DataFrame):
     st.header("📉 Stationarity Analysis (ADF + ACF/PACF)")
