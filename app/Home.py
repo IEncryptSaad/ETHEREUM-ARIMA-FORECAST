@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import timedelta
-from app.data_fetch import get_binance_data
+from data_fetch import get_binance_data
 
 st.set_page_config(page_title="ETH/USDT ARIMA", layout="wide")
 st.title("ETH/USDT ARIMA – Cloud App")
