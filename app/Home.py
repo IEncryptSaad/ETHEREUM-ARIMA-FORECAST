@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 from datetime import timedelta
-from data_fetch import get_binance_data
-
-st.set_page_config(page_title="ETH/USDT ARIMA", layout="wide")
-st.title("ETH/USDT ARIMA – Cloud App")
+from data_fetch import get_eth_ohlcv
+...
+def _fetch(interval: str, limit: int) -> pd.DataFrame:
+    return get_eth_ohlcv(interval=interval, limit=limit)
 
 st.caption("Live data via Binance public API (no key). Choose interval & history, then explore the chart.")
 
